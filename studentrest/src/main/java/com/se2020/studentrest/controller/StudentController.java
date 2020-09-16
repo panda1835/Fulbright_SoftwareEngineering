@@ -43,7 +43,6 @@ public class StudentController{
 
     @DeleteMapping("/student/{id}")
     public String delete(@PathVariable Long id){
-        // String name = studentRepository.findById(id).get().getName();
         studentRepository.deleteById(id);
         return "Success";
     }
