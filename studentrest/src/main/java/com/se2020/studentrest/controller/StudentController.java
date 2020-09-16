@@ -26,8 +26,8 @@ public class StudentController{
     // matching the pattern and doing he logic
     // @PathVariable: map {id} to String studentID
 
-    public Student getStudent(@PathVariable(name = "id") Long studentId){ 
-        return studentRepository.findById(studentId).get();
+    public Student getStudent(@PathVariable(name = "id") Long id){ 
+        return studentRepository.findById(id).get();
     }
 
     @GetMapping("/student")
@@ -38,19 +38,23 @@ public class StudentController{
     @PostMapping("/student")
     public String saveStudent(@RequestBody Student student){
         studentRepository.save(student);
-
         return "Success";
     }
 
     @DeleteMapping("/student/{id}")
-    void delete(@PathVariable Long id){
-
+    public String delete(@PathVariable Long id){
+        // String name = studentRepository.findById(id).get().getName();
+        studentRepository.deleteById(id);
+        return "Success";
     }
 
     @PutMapping("/student/{id}")
-    Student updatStudent(@RequestBody Student student, @PathVariable Long id){
-
-        return null;
+    public String updateStudent(@RequestBody Student student, @PathVariable Long id){
+        Student updateStudent = studentRepository.getOne(id);
+        updateStudent.setName(student.getName());
+        updateStudent.setRole(student.getRole());
+        studentRepository.save(updateStudent);
+        return "Success";
     }
 
 }
