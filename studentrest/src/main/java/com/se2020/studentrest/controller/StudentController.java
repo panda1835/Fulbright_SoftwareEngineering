@@ -43,12 +43,18 @@ public class StudentController{
 
     @DeleteMapping("/student/{id}")
     public String delete(@PathVariable Long id){
+        if (!studentRepository.existsById(id)){
+            return "Invalid id";
+        }
         studentRepository.deleteById(id);
         return "Success";
     }
 
     @PutMapping("/student/{id}")
     public String updateStudent(@RequestBody Student student, @PathVariable Long id){
+        if (!studentRepository.existsById(id)){
+            return "Invalid id";
+        }
         Student updateStudent = studentRepository.getOne(id);
         updateStudent.setName(student.getName());
         updateStudent.setRole(student.getRole());
